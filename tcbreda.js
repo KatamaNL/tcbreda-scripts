@@ -1,0 +1,68 @@
+/**
+ * TC Breda - Custom Footer Scripts
+ * Hosted via GitHub Pages (KatamaNL/tcbreda-scripts)
+ *
+ * 1. Vervangt copyright link naar katama.nl
+ * 2. Voegt klikbare footer navigatie links toe
+ */
+(function() {
+  'use strict';
+
+  function init() {
+    fixCopyrightLink();
+    createFooterNav();
+  }
+
+  function fixCopyrightLink() {
+    var link = document.querySelector('.copyright a');
+    if (link) {
+      link.href = 'https://katama.nl';
+      link.target = '_blank';
+      link.rel = 'noopener';
+    }
+  }
+
+  function createFooterNav() {
+    var footerRow = document.querySelector('.footer .row');
+    if (!footerRow) return;
+
+    var nav = document.createElement('div');
+    nav.className = 'footer-nav-links';
+    nav.style.cssText = 'width:100%;text-align:center;padding:20px 0 10px;margin-top:20px;border-top:1px solid rgba(255,255,255,0.15)';
+
+    var links = [
+      ['/', 'Home'],
+      ['/contributies', 'Lidmaatschap'],
+      ['/tennislessen', 'Tennisles'],
+      ['/activiteiten', 'Activiteiten'],
+      ['/sponsoring', 'Sponsoring'],
+      ['/contact', 'Contact'],
+      ['/baanhuur', 'Baanhuur']
+    ];
+
+    links.forEach(function(item, i) {
+      if (i > 0) {
+        var sep = document.createElement('span');
+        sep.textContent = ' | ';
+        sep.style.cssText = 'color:rgba(255,255,255,0.3);font-size:13px';
+        nav.appendChild(sep);
+      }
+      var a = document.createElement('a');
+      a.href = item[0];
+      a.textContent = item[1];
+      a.style.cssText = 'color:rgba(255,255,255,0.5);font-size:13px;text-decoration:none;padding:0 6px;transition:color 0.2s';
+      a.addEventListener('mouseover', function() { this.style.color = '#fff'; });
+      a.addEventListener('mouseout', function() { this.style.color = 'rgba(255,255,255,0.5)'; });
+      nav.appendChild(a);
+    });
+
+    footerRow.parentNode.appendChild(nav);
+    footerRow.parentNode.classList.add('has-nav-links');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

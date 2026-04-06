@@ -11,6 +11,7 @@
 
   function init() {
     fixCopyrightLink();
+    fixRouteLink();
     createFooterNav();
     fixHamburgerColor();
     createFooterDiagonal();
@@ -23,6 +24,17 @@
       link.target = '_blank';
       link.rel = 'noopener';
     }
+  }
+
+  function fixRouteLink() {
+    var links = document.querySelectorAll('.footer a');
+    links.forEach(function(a) {
+      if (a.textContent.trim() === 'Routebeschrijving' || a.href.indexOf('maps/dir') > -1) {
+        a.href = 'https://maps.app.goo.gl/HiJ2PQoEtcm3YY839';
+        a.target = '_blank';
+        a.rel = 'noopener';
+      }
+    });
   }
 
   function createFooterNav() {

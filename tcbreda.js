@@ -4,6 +4,7 @@
  *
  * 1. Vervangt copyright link naar katama.nl
  * 2. Voegt klikbare footer navigatie links toe
+ * 3. Voegt diagonaal rood/blauw patroon toe boven footer
  */
 (function() {
   'use strict';
@@ -12,6 +13,7 @@
     fixCopyrightLink();
     createFooterNav();
     fixHamburgerColor();
+    createFooterDiagonal();
   }
 
   function fixCopyrightLink() {
@@ -65,6 +67,20 @@
     var style = document.createElement('style');
     style.textContent = '.navbar-toggler{color:#1c2088!important;border-color:#1c2088!important}.navbar-toggler-bars,.navbar-toggler-bars::before,.navbar-toggler-bars::after{background:#1c2088!important}';
     document.head.appendChild(style);
+  }
+
+  function createFooterDiagonal() {
+    var footer = document.querySelector('.footer');
+    if (!footer || document.querySelector('.footer-diagonal-band')) return;
+
+    var band = document.createElement('div');
+    band.className = 'footer-diagonal-band';
+
+    var red = document.createElement('div');
+    red.className = 'footer-diagonal-red';
+    band.appendChild(red);
+
+    footer.parentNode.insertBefore(band, footer);
   }
 
   if (document.readyState === 'loading') {

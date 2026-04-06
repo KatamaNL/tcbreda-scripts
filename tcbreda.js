@@ -65,7 +65,7 @@
 
   function fixHamburgerColor() {
     var style = document.createElement('style');
-    style.textContent = '.navbar-toggler{color:#1c2088!important;border-color:#1c2088!important}.navbar-toggler-bars,.navbar-toggler-bars::before,.navbar-toggler-bars::after{background:#1c2088!important}';
+    style.textContent = '.navbar-toggler{color:#383c8f!important;border-color:#383c8f!important}.navbar-toggler-bars,.navbar-toggler-bars::before,.navbar-toggler-bars::after{background:#383c8f!important}';
     document.head.appendChild(style);
   }
 

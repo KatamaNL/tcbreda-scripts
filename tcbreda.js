@@ -11,6 +11,7 @@
   function init() {
     fixCopyrightLink();
     createFooterNav();
+    fixHamburgerColor();
   }
 
   function fixCopyrightLink() {
@@ -58,6 +59,12 @@
 
     footerRow.parentNode.appendChild(nav);
     footerRow.parentNode.classList.add('has-nav-links');
+  }
+
+  function fixHamburgerColor() {
+    var style = document.createElement('style');
+    style.textContent = '.navbar-toggler{color:#1c2088!important;border-color:#1c2088!important}.navbar-toggler-bars,.navbar-toggler-bars::before,.navbar-toggler-bars::after{background:#1c2088!important}';
+    document.head.appendChild(style);
   }
 
   if (document.readyState === 'loading') {

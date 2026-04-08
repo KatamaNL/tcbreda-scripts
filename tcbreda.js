@@ -175,7 +175,7 @@
             'name': 'Wat kost de Zomer Challenge 2026?',
             'acceptedAnswer': {
               '@type': 'Answer',
-              'text': 'De Zomer Challenge 2026 kost 40 euro voor een tijdelijk lidmaatschap van juni t/m augustus, of 60 euro inclusief 2 tennislessen. Het lidmaatschap eindigt automatisch per 1 september 2026.'
+              'text': 'De Zomer Challenge 2026 kost 40 euro voor een tijdelijk lidmaatschap van juni t/m augustus, of 59 euro inclusief 2 tennislessen. Het lidmaatschap eindigt automatisch per 1 september 2026.'
             }
           }
         ]

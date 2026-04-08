@@ -12,7 +12,6 @@
   function init() {
     fixCopyrightLink();
     fixRouteLink();
-    fixMijnClubLink();
     createFooterNav();
     fixHamburgerColor();
     createFooterDiagonal();
@@ -37,13 +36,6 @@
         a.rel = 'noopener';
       }
     });
-  }
-
-  function fixMijnClubLink() {
-    var link = document.querySelector('.nav-item.myaccount a');
-    if (link) {
-      link.href = '/webcam';
-    }
   }
 
   function createFooterNav() {

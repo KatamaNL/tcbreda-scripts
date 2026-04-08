@@ -15,6 +15,7 @@
     createFooterNav();
     fixHamburgerColor();
     createFooterDiagonal();
+    injectFAQSchema();
   }
 
   function fixCopyrightLink() {
@@ -79,6 +80,114 @@
     var style = document.createElement('style');
     style.textContent = '.navbar-toggler{color:#383c8f!important;border-color:#383c8f!important}.navbar-toggler-bars,.navbar-toggler-bars::before,.navbar-toggler-bars::after{background:#383c8f!important}';
     document.head.appendChild(style);
+  }
+
+  function injectFAQSchema() {
+    var path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+    var faq = null;
+
+    if (path === '/lid-worden' || path === '/hoe-word-je-lid') {
+      faq = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': [
+          {
+            '@type': 'Question',
+            'name': 'Kan ik eerst een keer komen kijken bij TC Breda?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Natuurlijk! Loop gerust binnen tijdens openingstijden. Je bent altijd welkom voor een rondleiding.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Wat is de Zomer Challenge?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Van juni t/m augustus kun je 3 maanden tennissen voor slechts 40 euro. Ideaal om de club te leren kennen.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Kan ik op elk moment lid worden van TC Breda?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Ja! Je kunt op elk moment instromen. De tarieven worden aangepast per kwartaal (1 januari, 1 juli of 1 oktober).'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Heb ik eigen materiaal nodig om te tennissen?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Een tennisracket en tennisschoenen (bij voorkeur gravel) zijn nodig. Ballen worden door de club verzorgd bij lessen en competitie.'
+            }
+          }
+        ]
+      };
+    } else if (path === '/contributies') {
+      faq = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': [
+          {
+            '@type': 'Question',
+            'name': 'Wat kost een seniorenlidmaatschap bij TC Breda?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Een seniorenlidmaatschap (vanaf 21 jaar) kost 170 euro per jaar bij instap per 1 januari, 90 euro per 1 juli of 55 euro per 1 oktober. Senioren tot 21 jaar betalen 125 euro per jaar. 65-plussers betalen 70 euro per jaar.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Zijn er jeugdtarieven bij TC Breda?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Ja. Jeugd van 8 t/m 17 jaar betaalt 57 euro per jaar, jeugd van 5 t/m 7 jaar betaalt 45 euro per jaar. Voor jeugd t/m 17 jaar wordt geen inschrijfgeld in rekening gebracht.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Wat is het inschrijfgeld bij TC Breda?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Het inschrijfgeld is eenmalig 23 euro per persoon bij aanmelding. Voor jeugd t/m 17 jaar wordt geen inschrijfgeld in rekening gebracht.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Wat is de waarborg bardienst?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'De waarborg bardienst is 50 euro. Elk lid is verplicht twee bar- of parkdiensten per jaar te vervullen. De waarborg wordt terugbetaald na correct opzeggen van het lidmaatschap en het vervullen van de verplichte diensten.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Kan ik de verplichte bardiensten afkopen?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'Ja, de verplichte bardiensten kunnen worden afgekocht voor 35 euro per dienst of 60 euro voor twee diensten.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'Wat kost de Zomer Challenge 2026?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'De Zomer Challenge 2026 kost 40 euro voor een tijdelijk lidmaatschap van juni t/m augustus, of 60 euro inclusief 2 tennislessen. Het lidmaatschap eindigt automatisch per 1 september 2026.'
+            }
+          }
+        ]
+      };
+    }
+
+    if (faq) {
+      var el = document.createElement('script');
+      el.type = 'application/ld+json';
+      el.textContent = JSON.stringify(faq);
+      document.head.appendChild(el);
+    }
   }
 
   function createFooterDiagonal() {

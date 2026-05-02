@@ -43,28 +43,19 @@
         value: 40.00
       });
     }
+    if (path === '/lid-worden' || path === '/lidworden') {
+      fbq('track', 'InitiateCheckout', {
+        content_name: 'Zomer Challenge 2026',
+        content_category: 'tijdelijk-lidmaatschap',
+        currency: 'EUR',
+        value: 40.00
+      });
+    }
   }
 
   function bindCheckoutEvents() {
-    if (!window.fbq) return;
-    var path = window.location.pathname.toLowerCase().replace(/\/$/, '');
-    if (path !== '/zomer-challenge') return;
-
-    document.body.addEventListener('click', function(e) {
-      var target = e.target.closest('a, button');
-      if (!target) return;
-      var text = (target.textContent || '').trim().toLowerCase();
-      var href = (target.getAttribute('href') || '').toLowerCase();
-      var isCheckout = /aanmeld|inschrijv|word lid|deelnem|reserveer/.test(text)
-                    || /lidworden|lid-worden|inschrijv|aanmeld/.test(href);
-      if (isCheckout) {
-        fbq('track', 'InitiateCheckout', {
-          content_name: 'Zomer Challenge 2026',
-          currency: 'EUR',
-          value: 40.00
-        });
-      }
-    }, true);
+    // Replaced by path-based InitiateCheckout in trackPageEvents.
+    // Kept as no-op to avoid breaking init() call order.
   }
 
   function fixCopyrightLink() {

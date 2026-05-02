@@ -5,9 +5,12 @@
  * 1. Vervangt copyright link naar katama.nl
  * 2. Voegt klikbare footer navigatie links toe
  * 3. Voegt diagonaal rood/blauw patroon toe boven footer
+ * 4. Meta Pixel (Zomer Challenge campagne 2026)
  */
 (function() {
   'use strict';
+
+  var META_PIXEL_ID = '942137727696983';
 
   function init() {
     fixCopyrightLink();
@@ -16,6 +19,52 @@
     fixHamburgerColor();
     createFooterDiagonal();
     injectFAQSchema();
+    initMetaPixel();
+    trackPageEvents();
+    bindCheckoutEvents();
+  }
+
+  function initMetaPixel() {
+    if (window.fbq) return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', META_PIXEL_ID);
+    fbq('track', 'PageView');
+  }
+
+  function trackPageEvents() {
+    if (!window.fbq) return;
+    var path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+    if (path === '/zomer-challenge') {
+      fbq('track', 'ViewContent', {
+        content_name: 'Zomer Challenge 2026',
+        content_category: 'tijdelijk-lidmaatschap',
+        content_ids: ['zomer-challenge-2026'],
+        currency: 'EUR',
+        value: 40.00
+      });
+    }
+  }
+
+  function bindCheckoutEvents() {
+    if (!window.fbq) return;
+    var path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+    if (path !== '/zomer-challenge') return;
+
+    document.body.addEventListener('click', function(e) {
+      var target = e.target.closest('a, button');
+      if (!target) return;
+      var text = (target.textContent || '').trim().toLowerCase();
+      var href = (target.getAttribute('href') || '').toLowerCase();
+      var isCheckout = /aanmeld|inschrijv|word lid|deelnem|reserveer/.test(text)
+                    || /lidworden|lid-worden|inschrijv|aanmeld/.test(href);
+      if (isCheckout) {
+        fbq('track', 'InitiateCheckout', {
+          content_name: 'Zomer Challenge 2026',
+          currency: 'EUR',
+          value: 40.00
+        });
+      }
+    }, true);
   }
 
   function fixCopyrightLink() {

@@ -54,8 +54,52 @@
   }
 
   function bindCheckoutEvents() {
-    // Replaced by path-based InitiateCheckout in trackPageEvents.
-    // Kept as no-op to avoid breaking init() call order.
+    if (!window.fbq) return;
+    var path = window.location.pathname.toLowerCase().replace(/\/$/, '');
+    if (path !== '/lid-worden' && path !== '/lidworden') return;
+
+    var leadFired = false;
+    function fireLead(source) {
+      if (leadFired) return;
+      leadFired = true;
+      fbq('track', 'Lead', {
+        content_name: 'Zomer Challenge 2026',
+        content_category: 'tijdelijk-lidmaatschap',
+        currency: 'EUR',
+        value: 40.00,
+        source: source
+      });
+    }
+
+    document.body.addEventListener('click', function(e) {
+      var target = e.target.closest('button, input[type="submit"], a');
+      if (!target) return;
+      var text = (target.textContent || target.value || '').trim().toLowerCase();
+      if (/verzend|verstuur|aanmeld|inschrijv|bevestig|opslaan|registreer|submit/.test(text)) {
+        fireLead('button-click');
+      }
+    }, true);
+
+    document.addEventListener('submit', function() {
+      fireLead('form-submit');
+    }, true);
+
+    var observer = new MutationObserver(function(mutations) {
+      if (leadFired) { observer.disconnect(); return; }
+      for (var i = 0; i < mutations.length; i++) {
+        var added = mutations[i].addedNodes;
+        for (var j = 0; j < added.length; j++) {
+          var node = added[j];
+          if (node.nodeType !== 1) continue;
+          var text = (node.textContent || '').toLowerCase();
+          if (/bedankt|aanmelding ontvangen|aanmelding is verstuur|succesvol aangemeld|registratie voltooid|we nemen contact/.test(text)) {
+            fireLead('dom-success');
+            return;
+          }
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
   function fixCopyrightLink() {
